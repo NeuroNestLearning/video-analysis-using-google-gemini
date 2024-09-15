@@ -75,6 +75,8 @@ export default function Home() {
             const generativeModel = getGenerativeModel(vertexAI, {
                 model: "gemini-1.5-flash",
                 //systemInstruction: "" //add system instructions
+                //safetySettings: GEMINI_SAFETY_SETTINGS //add safety settings here
+                //generationConfig: {} //add model configuration here
             });
 
             const videoFilePart = {
@@ -84,7 +86,7 @@ export default function Home() {
                 },
             };
 
-            const textPart = {text: 'Analyze this video and provide a summary:'}
+            const textPart = {text: 'Analyze this video and provide a summary:'} // modify this section for better analysis
             const request = {
                 contents: [{role: 'user', parts: [videoFilePart, textPart]}],
             };
@@ -102,7 +104,7 @@ export default function Home() {
 
     const storeAnalysisInFireStore = async (bucket: string, path: string, result: string) => {
         try {
-            await addDoc(collection(db, 'videoAnalysis1'), {
+            await addDoc(collection(db, 'videoAnalysis'), {
                 bucket: bucket,
                 filePath: path,
                 analysis: result,
